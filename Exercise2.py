@@ -56,7 +56,24 @@ def number_of_unique_words():
     print("Number of unique words:", len(myset))
 
 
-number_of_lines()
-number_of_words()
-number_of_characters()
-number_of_unique_words()
+def select_an_option():
+    while True:
+        print(
+            '\nMenu: \n\n1. Number of characters (including whitespace)\n2. Number of words (separated by '
+            'whitespace)\n3. Number of lines \n4. Number of unique words\n')
+        option = input("Enter an option\n")
+
+        if option == '1':
+            number_of_characters()
+        elif option == '2':
+            number_of_words()
+        elif option == '3':
+            number_of_lines()
+        elif option == '4':
+            number_of_unique_words()
+        else:
+            print("This is not an option!")
+            break
+
+
+select_an_option()
