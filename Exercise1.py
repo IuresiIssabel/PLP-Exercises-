@@ -39,7 +39,7 @@ def read_file_by_line(file):
             new_lines = lines.copy()
 
             for i in lines:
-                if i[0].__contains__("#"):
+                if i.startswith("#"):
                     new_lines.remove(i)
 
             for j in new_lines:
@@ -54,8 +54,8 @@ def create_dictionary(file):
     usernames, ids = read_file_by_line(file)
     users_dict = {}
 
-    for i in range(len(usernames)):
-        users_dict[usernames[i]] = ids[i]
+    for line in zip(usernames, ids):
+        users_dict.update({line[1]: line[0]})
 
     return users_dict
 
@@ -63,8 +63,8 @@ def create_dictionary(file):
 def display_usernames_alphabetical(file):
     dictionary = create_dictionary(file)
 
-    for key in sorted(dictionary.__iter__()):
-        print(key, dictionary[key])
+    for key in sorted(dictionary.keys()):
+        print(dictionary[key], key)
 
 
 display_usernames_alphabetical('/etc/passwd')
