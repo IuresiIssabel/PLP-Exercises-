@@ -27,16 +27,19 @@ daemon:*:1:1::0:0:System Services:/var/root:/usr/bin/false
 _ftp:*:98:-2::0:0:FTP Daemon:/var/empty:/usr/bin/false
 
 
-
 … and the output will look like:
 root    0
 daemon  1
 _ftp    98
 
+
+Usage:
+    Use: "stuff.csv" as argument
+
 """
 
-
 import csv
+import getpass
 
 
 def read_file_by_line(file):
@@ -53,7 +56,7 @@ def read_file_by_line(file):
             new_lines = lines.copy()
 
             for i in lines:
-                if i[0].__contains__("#"):
+                if i.startswith("#"):
                     new_lines.remove(i)
 
             for j in new_lines:
@@ -83,4 +86,5 @@ def write_in_csv_file(input_file, output_file):
             writer.writerow([key, value])
 
 
-write_in_csv_file('/etc/passwd', '/Users/issabel.iuresi/Documents/stuff.csv')
+file_name = '/Users/' + getpass.getuser() + '/Documents/' + input("Enter the file name: ")
+write_in_csv_file('/etc/passwd', file_name)
