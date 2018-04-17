@@ -26,46 +26,45 @@ You should then iterate through this dict, displaying one username and user ID o
 
 
 def read_file_by_line(file):
-    f = open(file)
     username_value, id_value = [], []
 
-    while True:
-        lines = f.readlines()
+    with open(file, 'r') as f:
+        while True:
+            lines = f.readlines()
 
-        if not lines:
-            break
+            if not lines:
+                break
 
-        lines = [line.strip() for line in lines]
-        new_lines = lines.copy()
+            lines = [line.strip() for line in lines]
+            new_lines = lines.copy()
 
-        for i in range(len(lines)):
-            if lines[i][0].__contains__("#"):
-                new_lines.remove(lines[i])
+            for i in lines:
+                if i[0].__contains__("#"):
+                    new_lines.remove(i)
 
-        for j in range(len(new_lines)):
-            words = new_lines[j].split(":")
-            username_value.append(words[0])
-            id_value.append(words[2])
+            for j in new_lines:
+                words = j.split(":")
+                username_value.append(words[0])
+                id_value.append(words[2])
 
     return username_value, id_value
 
 
-def create_dictionary():
-    usernames, ids = read_file_by_line('/etc/passwd')
-
-    professions_dict = {}
+def create_dictionary(file):
+    usernames, ids = read_file_by_line(file)
+    users_dict = {}
 
     for i in range(len(usernames)):
-        professions_dict[usernames[i]] = ids[i]
+        users_dict[usernames[i]] = ids[i]
 
-    return professions_dict
+    return users_dict
 
 
-def display_usernames_alphabetical():
-    dictionary = create_dictionary()
+def display_usernames_alphabetical(file):
+    dictionary = create_dictionary(file)
 
     for key in sorted(dictionary.__iter__()):
         print(key, dictionary[key])
 
 
-display_usernames_alphabetical()
+display_usernames_alphabetical('/etc/passwd')

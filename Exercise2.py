@@ -19,9 +19,9 @@ from collections import Counter
 
 def get_file():
     file = input("Enter the file name: ")
-    f = open(file)
-    data = f.read()
-    f.close()
+
+    with open(file, 'r') as f:
+        data = f.read()
 
     return data
 
