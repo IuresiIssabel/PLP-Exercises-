@@ -71,8 +71,8 @@ def create_dictionary(file):
     usernames, ids = read_file_by_line(file)
     users_dict = {}
 
-    for i in range(len(usernames)):
-        users_dict[usernames[i]] = ids[i]
+    for line in zip(usernames, ids):
+        users_dict.update({line[1]: line[0]})
 
     return users_dict
 
@@ -83,8 +83,9 @@ def write_in_csv_file(input_file, output_file):
     with open(output_file, 'w') as f:
         writer = csv.writer(f, delimiter='\t')
         for key, value in dictionary.items():
-            writer.writerow([key, value])
+            writer.writerow([value, key])
 
 
-file_name = '/Users/' + getpass.getuser() + '/Documents/' + input("Enter the file name: ")
+file_name = '/Users/{username}/Documents/{filename}'.format(username=getpass.getuser(),
+                                                            filename=input("Enter the file name: "))
 write_in_csv_file('/etc/passwd', file_name)
